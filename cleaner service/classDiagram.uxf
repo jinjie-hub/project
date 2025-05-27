@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>3</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>582</x>
+      <y>213</y>
+      <w>240</w>
+      <h>102</h>
+    </coordinates>
+    <panel_attributes>UserAccount
+--
++id int
++username string
++email string
++password string
++profile_id int (FK references on UserProfile)
++is_active boolean
++time_stamp date
+--
++contructor(int id, string username, string email, string password, int profile_id, boolean is_active, date time_stamp)
++isValid()
+_+fromDB(row)_
++hashPassword()
++createUserAccount()
+_+viewUserAccount()_
+_+findByUsernameAndRole()_
+_+searchUserAccount(int id)_
+_+updateUserAccount(int id, {string username, string eamil, string password, string role, int user_profile_id, boolean is_active})_
+_+suspendUserAccount(int id)_
+_+comparePassword(string enteredPassword, string storedPassword)_
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>885</x>
+      <y>219</y>
+      <w>153</w>
+      <h>87</h>
+    </coordinates>
+    <panel_attributes>UserProfile
+--
++id int
++name string
++description string
++is_active boolean
+--
++constructor(int id, string name, string description, boolean is_active)
++isValid()
+_+fromDB(row)_
++createUserProfile()
+_+viewUserProfile()_
+_+updateUserProfile(int id, {string name, string description, boolean is_active})_
+_+suspendUserProfile(int id)_
+_+searchUserProfile(string name)_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>861</x>
+      <y>564</y>
+      <w>129</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>ServiceCategories
+--
++id int
++name string
++description string
+--
++constructor(int id, string name, string description)
++isValid()
+_+fromDB(row)_
++createServiceCategories()
+_+viewServiceCategories()_
+_+updateServiceCategories(int id, {string name, string description})_
+_+deleteServiceCategories(int id)_
+_+searchServiceCategories(int id)_
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>156</x>
+      <y>219</y>
+      <w>327</w>
+      <h>102</h>
+    </coordinates>
+    <panel_attributes>ServiceListing
+--
++id int
++cleaner_id int (FK references on UserAccount)
++title string
++description string
++price double
++location string
++view_count int
++listed_count int
++service_categories_name string
++created_at date
+--
++constructor(int id, int cleaner_id, string title, string description, double price, string location, int view_count, int listed_count, string service_categories_name, date created_at)
++isValid()
+_+fromDB(row)_
++createServiceListing()
+_+viewServiceListing()_
+_+updateServiceListing(int id, {int cleaner_id, string title, string description, double price, string location, boolean is_acitve})_
+_+suspendServiceListing(int id)_
+_+searchServiceListring(string title)_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>819</x>
+      <y>261</y>
+      <w>72</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>belongs to
+lt=&lt;-
+m1=0..n
+m2= 1</panel_attributes>
+    <additional_attributes>10.0;20.0;220.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>480</x>
+      <y>255</y>
+      <w>108</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>have
+lt=&lt;-
+m1=0..n
+m2=1</panel_attributes>
+    <additional_attributes>10.0;20.0;340.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>450</x>
+      <y>432</y>
+      <w>123</w>
+      <h>57</h>
+    </coordinates>
+    <panel_attributes>PlatformReport
+--
++id int
++date_of_report date
++type_of_report string
+--
++constructor(int id, date date_of_report, string type_of_report)
++isValid()
+_+fromDB(row)_
++generateDailyReport()
++generateWeeklyReport()
++generateMonthlyReport()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>411</x>
+      <y>543</y>
+      <w>390</w>
+      <h>99</h>
+    </coordinates>
+    <panel_attributes>MatchHistory
+--
++id int
++service_listing_id int (FK references on service_listing)
++homeowner_id int (FK reference on user_account)
++date_confirmed date
++service_date date
++status boolean
++title string
++service_categories_name string (FK references on service_categories)
++price double
++description string
++cleaner_id int (FK references on user_account)
+--
++constructor(int id, int service_listing_id, int homeowner_id, date date_confirmed, date service_date, boolean status, string title, string service_categories_name, double price, string description, int cleaner_id)
++isValid()
+_+fromDB(row)_
+_+cleanerViewMatchHistory(cleaner_id)_
+_+cleanerSearchMatchHistory(cleaner_id)_
+_+homeownerViewMatchHistory(homeowner_id)_
+_+homeownerSearchMatchHistory(homeowner_id)_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>372</x>
+      <y>345</y>
+      <w>150</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>FavouriteListing
+--
++id int
++homeowner_id int (FK references on user_account)
++service_listing_id int (FK references on service_listing)
++added_at date
+--
++constructor(int id, int homeowner_id, int service_listing_id, date added_at)
++isValid()
+_+fromDB(row)_
++saveFavouriteListing()
+_+viewFavouriteListing()_
+_+searchFavouriteListing(id)_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>627</x>
+      <y>138</y>
+      <w>90</w>
+      <h>39</h>
+    </coordinates>
+    <panel_attributes>LoginUser
+--
++username string
++password string
++profile_id int (FK references on user_profile)
+--
++isValid()
++authenticate()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>330</x>
+      <y>318</y>
+      <w>87</w>
+      <h>285</h>
+    </coordinates>
+    <panel_attributes>references
+lt=&lt;-
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;920.0;270.0;920.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>699</x>
+      <y>312</y>
+      <w>27</w>
+      <h>237</h>
+    </coordinates>
+    <panel_attributes>belongs to
+lt=&lt;-
+m1=1	
+m2=0..n</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;770.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>798</x>
+      <y>582</y>
+      <w>69</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>has
+lt=&lt;-
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>210.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>684</x>
+      <y>174</y>
+      <w>39</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>
+authenticate with
+lt=&lt;-
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>510</x>
+      <y>291</y>
+      <w>78</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>has
+lt=&lt;-
+m1=0..n
+m2=1</panel_attributes>
+    <additional_attributes>10.0;180.0;10.0;20.0;240.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>399</x>
+      <y>318</y>
+      <w>27</w>
+      <h>33</h>
+    </coordinates>
+    <panel_attributes>favourited
+lt=&lt;-
+m1=0..n
+m2=1</panel_attributes>
+    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>570</x>
+      <y>312</y>
+      <w>81</w>
+      <h>141</h>
+    </coordinates>
+    <panel_attributes>help to generate
+lt=&lt;-
+m1=1
+m2=0..n</panel_attributes>
+    <additional_attributes>10.0;440.0;150.0;440.0;150.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>351</x>
+      <y>318</y>
+      <w>108</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>help to generate
+lt=&lt;-
+m1=1
+m2=0..n</panel_attributes>
+    <additional_attributes>340.0;470.0;10.0;470.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>495</x>
+      <y>486</y>
+      <w>39</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>help to generate
+lt=&lt;-
+m1=1
+m2=0..n</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;190.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>429</x>
+      <y>408</y>
+      <w>39</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>help to generate
+lt=&lt;-
+m1=1
+m2=0..n</panel_attributes>
+    <additional_attributes>70.0;130.0;10.0;130.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
